@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Script (openGate.sh) to enable configring SIP (System Integrity Protection) under normal OS.
+# Script (openGate.sh) to enable configuring SIP (System Integrity Protection) under normal OS.
 #
 #
 # Version 0.2 - Copyright (c) 2013-2016 by Angel W.
