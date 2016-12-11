@@ -31,6 +31,11 @@ Run the script in a terminal window by:
 ./openGate.sh
 ```
 
+Also. You can uninstall this by:
+``` sh
+./openGate.sh -u
+```
+
 Change Log
 ----------------
 11/12/2016
