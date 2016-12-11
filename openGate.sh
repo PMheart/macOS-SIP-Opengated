@@ -4,10 +4,11 @@
 # Script (openGate.sh) to enable configuring SIP (System Integrity Protection) under normal OS.
 #
 #
-# Version 0.2 - Copyright (c) 2013-2016 by Angel W.
+# Version 0.3 - Copyright (c) 2013-2016 by Angel W.
 #
 # Updates:
 #                   - A possibility to uninstall/revert everything back. (Angel W. , December 2016)
+#                   - Will check searched data before patching.          (Angel W. , December 2016)
 #
 
 # set -x # Used for tracing errors (can be used anywhere in the script).
@@ -18,7 +19,7 @@ sudo -k  # Kill root privilege at a glance to prevent errors.
 #
 # Script version info.
 #
-gScriptVersion=0.2
+gScriptVersion=0.3
 
 #
 # The script expects '0.5' but non-US localizations use '0,5' so we export
@@ -86,7 +87,7 @@ function SearchAndCount()
   local byteValue=$1
   local byteValueEncode=$(echo $byteValue | sed 's/.\{2\}/\\\x&/g')
   local extBin=$2
-  perl -le "print scalar grep /$byteValueEncode/, <>;" "$extBin"
+  perl -le "print scalar grep /${byteValueEncode}/, <>;" "$extBin"
 }
 
 
@@ -102,7 +103,23 @@ function SearchAndReplace()
   local byteValueReplace=$2
   local byteValueReplaceEncode=$(echo $byteValueReplace | sed 's/.\{2\}/\\\x&/g')
   local targetBin=$3
-  perl -pi -e "s|$byteValueSearchEncode|$byteValueReplaceEncode|g" "$targetBin"
+
+  #
+  # Only patch after the search data has been found. (Count should > 0)
+  #
+  if [[ `SearchAndCount "${byteValueSearch}" "${targetBin}"` -gt 0 ]];
+    then
+      printf "${byteValueSearch} found in ${targetBin}.\nWill patch it with ${byteValueReplace}.\n"
+      #
+      # Found. Patch it.
+      #
+      perl -pi -e "s|${byteValueSearchEncode}|${byteValueReplaceEncode}|g" "$targetBin"
+    else
+      #
+      # NOT found. Aborted.
+      #
+      printf "${byteValueSearch} NOT found in ${targetBin}!!!\nPatch aborted."
+  fi
 }
 
 
