@@ -44,6 +44,9 @@ https://pikeralpha.wordpress.com/2015/09/23/another-one-bites-the-dust/
 
 Change Log
 ----------------
+12/12/2016
+- Only patch after the search data has been found.
+
 11/12/2016
 - Initial commit.
 - A possibility to uninstall patched AppleEFINVRAM.kext/LegacyEFINVRAM.kext
@@ -51,4 +54,4 @@ Change Log
 
 Bug reporting
 ---------------
-All bugs, so called 'issues', should be filed [here] (https://github.com/PMheart/macOS-SIP-Opengated/issues).
+All bugs should be filed [here] (https://github.com/PMheart/macOS-SIP-Opengated/issues).
