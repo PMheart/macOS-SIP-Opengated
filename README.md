@@ -37,8 +37,18 @@ Also. You can uninstall what the script did by:
 ./openGate.sh -u
 ```
 
+References
+------------
+https://www.idelta.info/archives/os-x-nvram-restriction-bypassed
+https://pikeralpha.wordpress.com/2015/09/23/another-one-bites-the-dust/
+
 Change Log
 ----------------
 11/12/2016
 - Initial commit.
 - A possibility to uninstall patched AppleEFINVRAM.kext/LegacyEFINVRAM.kext
+
+
+Bug reporting
+---------------
+All bugs, so called 'issues', should be filed [here] (https://github.com/PMheart/macOS-SIP-Opengated/issues).
