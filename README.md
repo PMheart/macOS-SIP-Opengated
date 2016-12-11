@@ -31,7 +31,7 @@ Run the script in a terminal window by:
 ./openGate.sh
 ```
 
-Also. You can uninstall this by:
+Also. You can uninstall what the script did by:
 ``` sh
 ./openGate.sh -u
 ```
