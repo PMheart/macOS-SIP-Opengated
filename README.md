@@ -2,6 +2,7 @@ openGate.sh
 ============
 
 As we all know. Apple introduced SIP (System Integrity Protection) in OS X El Capitan. And it got enhanced in macOS Sierra. Pretty good. But in some cases we have to change the settings of SIP. And Apple set a restriction that we cannot configure SIP under normal OS. We cannot set SIP status via ```csrutil```.
+
 So that's why I wrote this script.
 
 With the help of this script, we can patch AppleEFINVRAM.kext in ```/System/Library/Extensions/AppleEFIRuntime.kext/Contents/PlugIns/AppleEFINVRAM.kext``` and then this make configuring SIP status possible under normal OS X/macOS.
