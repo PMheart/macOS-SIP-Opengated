@@ -6,12 +6,17 @@ So that's why I wrote this script.
 
 With the help of this script, we can patch AppleEFINVRAM.kext in ```/System/Library/Extensions/AppleEFIRuntime.kext/Contents/PlugIns/AppleEFINVRAM.kext``` and then this make configuring SIP status possible under normal OS X/macOS.
 
+Note: You should use root privilege instead of normal privilege under normal OS if you want to configure SIP.
+``` sh
+sudo csrutil <args>
+```
+
 How to use openGate.sh?
 ------------------------
 Download the latest openGate.sh by entering the following command in a terminal window:
 
 ``` sh
-curl -O https://raw.githubusercontent.com/PMheart/macOS-SIP-Opengated/master/openGate.sh
+curl -o ./openGate.sh https://raw.githubusercontent.com/PMheart/macOS-SIP-Opengated/master/openGate.sh
 ```
 
 This will download openGate.sh to your current directory (./) and the next step is to change the permissions of the file (add +x) so that it can be run.
@@ -30,3 +35,4 @@ Change Log
 ----------------
 11/12/2016
 - Initial commit.
+- A possibility to uninstall patched AppleEFINVRAM.kext/LegacyEFINVRAM.kext

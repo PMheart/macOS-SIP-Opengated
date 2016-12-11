@@ -4,7 +4,10 @@
 # Script (openGate.sh) to enable configring SIP (System Integrity Protection) under normal OS.
 #
 #
-# Version 0.1 - Copyright (c) 2013-2016 by Angel W.
+# Version 0.2 - Copyright (c) 2013-2016 by Angel W.
+#
+# Updates:
+#                   - A possibility to uninstall/revert everything back. (Angel W. , December 2016)
 #
 
 # set -x # Used for tracing errors (can be used anywhere in the script).
@@ -15,7 +18,7 @@ sudo -k  # Kill root privilege at a glance to prevent errors.
 #
 # Script version info.
 #
-gScriptVersion=0.1
+gScriptVersion=0.2
 
 #
 # The script expects '0.5' but non-US localizations use '0,5' so we export
@@ -318,6 +321,29 @@ function main()
                           ;;
   esac
 
+  #
+  # To unistall patched AppleEFINVRAM.kext (LegacyEFINVRAM.kext)
+  #
+  gArgv=$(echo "$@" | tr '[:lower:]' '[:upper:]')
+  if [[ "$gArgv" == *"-U"* ]];
+    then
+      printf 'Uninstalling /Library/Extensions/LegacyEFINVRAM.kext...\n'
+      rm -Rf /Library/Extensions/LegacyEFINVRAM.kext
+      #
+      # Fix permissions.
+      #
+      chmod -R 755 "${gExtensionsDirectory[1]}"
+      chown -R 0:0 "${gExtensionsDirectory[1]}"
+      #
+      # Rebuild caches.
+      #
+      touch "${gExtensionsDirectory[0]}"
+      touch "${gExtensionsDirectory[1]}"
+      kextcache -u /&>/dev/null
+      printf 'Uninstalled. Please restart the machine for the changes to take effect.\n'
+      exit 0
+  fi
+
   _check_data
   #
   # We should remove previous files before making injector.
@@ -344,15 +370,15 @@ clear
 if [[ $gID -eq 0 ]];
   then
     #
-    # We are root. Call main.
+    # We are root. Call main with arguments.
     #
-    main
+    main "$@"
   else
     echo "This script ${STYLE_UNDERLINED}must${STYLE_RESET} be run as root!" 1>&2\
     #
     # Re-run script with arguments.
     #
-    sudo "$0"
+    sudo "$0" "$@"
 fi
 
 #================================================================================
