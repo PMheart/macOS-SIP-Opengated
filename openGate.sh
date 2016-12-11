@@ -127,7 +127,7 @@ function _install_kext()
   #
   # Rebuild caches.
   #
-  printf 'Rebuilding caches...'
+  printf 'Rebuilding caches...\n'
   touch "${gExtensionsDirectory[0]}"
   touch "${gExtensionsDirectory[1]}"
   kextcache -u /&>/dev/null
