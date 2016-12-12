@@ -311,6 +311,10 @@ function _make_injector()
     # Nothing found. Aborting.
     #
     else
+      #
+      # Remove created files.
+      #
+      rm -R /tmp/LegacyEFINVRAM.kext
       printf 'Nothing found.\nAborting...'
       clear
       printf 'Aborted script.\n'
