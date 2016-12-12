@@ -46,6 +46,7 @@ Change Log
 ----------------
 12/12/2016
 - Only patch after the search data has been found.
+- If /Library/Extensions/LegacyEFINVRAM.kext found then determine whether to re-install by user.
 
 11/12/2016
 - Initial commit.

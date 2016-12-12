@@ -7,8 +7,9 @@
 # Version 0.3 - Copyright (c) 2013-2016 by Angel W.
 #
 # Updates:
-#                   - A possibility to uninstall/revert everything back. (Angel W. , December 2016)
-#                   - Will check searched data before patching.          (Angel W. , December 2016)
+#                   - A possibility to uninstall/revert everything back.  (Angel W. , December 2016)
+#                   - Will check searched data before patching.  (Angel W. , December 2016)
+#                   - A possiblity to re-install LegacyEFINVRAM.kext if /L*/E*/LegacyEFINVRAM exists.  (Angel W. , December 2016)
 #
 
 # set -x # Used for tracing errors (can be used anywhere in the script).
@@ -19,7 +20,7 @@ sudo -k  # Kill root privilege at a glance to prevent errors.
 #
 # Script version info.
 #
-gScriptVersion=0.3
+gScriptVersion=0.4
 
 #
 # The script expects '0.5' but non-US localizations use '0,5' so we export
@@ -306,12 +307,98 @@ function _make_injector()
         #
         SearchAndReplace "85c0740b4883" "85c0eb0b4883" /tmp/LegacyEFINVRAM.kext/Contents/MacOS/AppleEFINVRAM
         printf 'Sierra _mac_iokit_check_nvram_delete patched.\n'
+    #
+    # Nothing found. Aborting.
+    #
+    else
+      printf 'Nothing found.\nAborting...'
+      clear
+      printf 'Aborted script.\n'
+      exit 1
   fi
 
   #
   # Go back to default working directory.
   #
   cd
+}
+
+
+#
+#--------------------------------------------------------------------------------
+#
+
+
+
+function _reinstall()
+{
+  #
+  # Prepare for _check_injector()
+  #
+  printf 'Reinstalling...\n'
+
+  #
+  # First remove the old LegacyEFINVRAM.kext
+  #
+  rm -Rf "${gExtensionsDirectory[1]}"/LegacyEFINVRAM.kext
+
+  #
+  # And then we re-make the LegacyEFINVRAM.kext
+  #
+  _check_data
+  #
+  # We should remove previous files before making injector.
+  #
+  rm -Rf /tmp/LegacyEFINVRAM.kext
+
+  _make_injector
+
+  #
+  # Now install /tmp/LegacyEFINVRAM.kext to /Library/Extensions
+  #
+  _install_kext "/tmp/LegacyEFINVRAM.kext"
+
+  #
+  # Okay. All done. Now about to exit.
+  #
+  printf 'All done! Now SIP got open-gated. Enjoy!\n'
+}
+
+
+#
+#--------------------------------------------------------------------------------
+#
+
+
+function _check_injector()
+{
+  #
+  # Maybe /Library/Extensions/LegacyEFINVRAM.kext exists? Not first running?
+  #
+  if [ -d "${gExtensionsDirectory[1]}/LegacyEFINVRAM.kext" ];
+    then
+      printf "LegacyEFINVRAM.kext already found @ ${gExtensionsDirectory[1]}.\n"
+      read -p "Do you want to reinstall LegacyEFINVRAM.kext (y/n)? " reinstall_yes_or_no
+      case "${reinstall_yes_or_no}" in
+        y|Y ) #
+              # Yes. Uninstall and Reinstall it.
+              #
+              _reinstall
+              #
+              # And now it's time to say goodbye.
+              #
+              exit 0
+        ;;
+        *   ) #
+              # No. Aborted.
+              #
+              printf 'Aborting script...\n'
+              clear
+              printf 'Done.\n'
+              exit 0
+        ;;
+        esac
+  fi
 }
 
 
@@ -357,11 +444,18 @@ function main()
       touch "${gExtensionsDirectory[0]}"
       touch "${gExtensionsDirectory[1]}"
       kextcache -u /&>/dev/null
+      clear
       printf 'Uninstalled. Please restart the machine for the changes to take effect.\n'
       exit 0
   fi
 
+  #
+  # Maybe not fist-running?
+  #
+  _check_injector
+
   _check_data
+
   #
   # We should remove previous files before making injector.
   #
