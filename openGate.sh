@@ -391,7 +391,7 @@ if [[ $gID -eq 0 ]];
     #
     main "$@"
   else
-    echo "This script ${STYLE_UNDERLINED}must${STYLE_RESET} be run as root!" 1>&2\
+    echo "This script must be run as root!" 1>&2
     #
     # Re-run script with arguments.
     #
