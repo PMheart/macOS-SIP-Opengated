@@ -53,6 +53,6 @@ Change Log
 - A possibility to uninstall patched AppleEFINVRAM.kext/LegacyEFINVRAM.kext
 
 
-Bug reporting
+Bug Reporting
 ---------------
 All bugs should be filed [here] (https://github.com/PMheart/macOS-SIP-Opengated/issues).
