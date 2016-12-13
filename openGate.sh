@@ -9,7 +9,7 @@
 # Updates:
 #                   - A possibility to uninstall/revert everything back.  (Angel W. , December 2016)
 #                   - Will check searched data before patching.  (Angel W. , December 2016)
-#                   - A possiblity to re-install LegacyEFINVRAM.kext if /L*/E*/LegacyEFINVRAM exists.  (Angel W. , December 2016)
+#                   - A possibility to re-install LegacyEFINVRAM.kext if /L*/E*/LegacyEFINVRAM exists.  (Angel W. , December 2016)
 #
 
 # set -x # Used for tracing errors (can be used anywhere in the script).
