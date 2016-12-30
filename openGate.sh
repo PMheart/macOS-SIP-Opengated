@@ -106,7 +106,7 @@ function SearchAndReplace()
   local targetBin=$3
 
   #
-  # Only patch after the search data has been found. (Count should > 0)
+  # Only patch after the search data has been found. (`SearchAndCount` should > 0)
   #
   if [[ `SearchAndCount "${byteValueSearch}" "${targetBin}"` -gt 0 ]];
     then
@@ -119,7 +119,7 @@ function SearchAndReplace()
       #
       # NOT found. Aborted.
       #
-      printf "${byteValueSearch} NOT found in ${targetBin}!!!\nPatch aborted."
+      printf "${byteValueSearch} NOT found in ${targetBin}!!! Patch aborted.\n"
   fi
 }
 
@@ -423,7 +423,7 @@ function main()
                           # Supported OS detected. Then do nothing.
                           #
                           ;;
-  *                     ) printf "Your system version (`gOSVersion`.x) is not supported!"
+  *                     ) printf "Your system major version ("$gOSVersion") is not supported!\n"
                           exit 1
                           ;;
   esac
