@@ -21,7 +21,7 @@ sudo -k  # Kill root privilege at a glance to prevent errors.
 #
 # Script version info.
 #
-gScriptVersion=0.4
+gScriptVersion=0.5
 
 #
 # The script expects '0.5' but non-US localizations use '0,5' so we export
