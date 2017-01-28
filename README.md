@@ -44,6 +44,9 @@ https://pikeralpha.wordpress.com/2015/09/23/another-one-bites-the-dust/
 
 Change Log
 ----------------
+01/28/2016
+- 10.12.4+ compatibility.
+
 12/12/2016
 - Only patch after the search data has been found.
 - If /Library/Extensions/LegacyEFINVRAM.kext found then determine whether to re-install by user.

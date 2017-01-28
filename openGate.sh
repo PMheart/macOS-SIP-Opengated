@@ -10,6 +10,7 @@
 #                   - A possibility to uninstall/revert everything back.  (Angel W. , December 2016)
 #                   - Will check searched data before patching.  (Angel W. , December 2016)
 #                   - A possibility to re-install LegacyEFINVRAM.kext if /L*/E*/LegacyEFINVRAM exists.  (Angel W. , December 2016)
+#                   - 10.12.4 compatiblity. (Angel W. , January 2017)
 #
 
 # set -x # Used for tracing errors (can be used anywhere in the script).
@@ -209,7 +210,22 @@ function _check_data()
           # Sierra _mac_iokit_check_nvram_delete found.
           #
           then
-            printf '==> AppleEFINVRAM Sierra version found.\n'
+            printf '==> AppleEFINVRAM Sierra 10.12.3- version found.\n'
+        fi
+    elif [[ `SearchAndCount "85c00f8538010000" "$gEFINVRAMDirectory/Contents/MacOS/AppleEFINVRAM"` == 1 ]];
+      #
+      # Sierra 10.12.4+ _mac_iokit_check_nvram_set found.
+      #
+      then
+        #
+        # Check further.
+        #
+        if [[ `SearchAndCount "85c0740b4883" "$gEFINVRAMDirectory/Contents/MacOS/AppleEFINVRAM"` == 1 ]];
+          #
+          # Sierra _mac_iokit_check_nvram_delete found.
+          #
+          then
+            printf '==> AppleEFINVRAM Sierra 10.12.4+ version found.\n'
         fi
     else
       #
@@ -292,21 +308,36 @@ function _make_injector()
         #
         SearchAndReplace "85c0740b4883c408" "85c0eb0b4883c408" /tmp/LegacyEFINVRAM.kext/Contents/MacOS/AppleEFINVRAM
         printf 'El Capitan _mac_iokit_check_nvram_delete patched.\n'
-    elif [[ `_check_data` == *"Sierra"* ]];
+    elif [[ `_check_data` == *"10.12.3"* ]];
       #
-      # Detected Sierra version.
+      # Detected Sierra 10.12.3- version.
       #
       then
         #
         # Patch _mac_iokit_check_nvram_set
         #
         SearchAndReplace "85c00f8549010000" "85c0909090909090" /tmp/LegacyEFINVRAM.kext/Contents/MacOS/AppleEFINVRAM
-        printf 'Sierra _mac_iokit_check_nvram_set patched.\n'
+        printf 'Sierra 10.12.3- _mac_iokit_check_nvram_set patched.\n'
         #
         # Patch _mac_iokit_check_nvram_delete
         #
         SearchAndReplace "85c0740b4883" "85c0eb0b4883" /tmp/LegacyEFINVRAM.kext/Contents/MacOS/AppleEFINVRAM
-        printf 'Sierra _mac_iokit_check_nvram_delete patched.\n'
+        printf 'Sierra 10.12.3- _mac_iokit_check_nvram_delete patched.\n'
+    elif [[ `_check_data` == *"10.12.4"* ]];
+      #
+      # Detected Sierra 10.12.4+ version.
+      #
+      then
+        #
+        # Patch _mac_iokit_check_nvram_set
+        #
+        SearchAndReplace "85c00f8538010000" "85c0909090909090" /tmp/LegacyEFINVRAM.kext/Contents/MacOS/AppleEFINVRAM
+        printf 'Sierra 10.12.4+ _mac_iokit_check_nvram_set patched.\n'
+        #
+        # Patch _mac_iokit_check_nvram_delete
+        #
+        SearchAndReplace "85c0740b4883" "85c0eb0b4883" /tmp/LegacyEFINVRAM.kext/Contents/MacOS/AppleEFINVRAM
+        printf 'Sierra 10.12.4+ _mac_iokit_check_nvram_delete patched.\n'
     #
     # Nothing found. Aborting.
     #
