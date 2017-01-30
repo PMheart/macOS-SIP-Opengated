@@ -4,7 +4,7 @@
 # Script (openGate.sh) to enable configuring SIP (System Integrity Protection) under normal OS.
 #
 #
-# Version 0.3 - Copyright (c) 2013-2016 by Angel W.
+# Version 0.5 - Copyright (c) 2013-2016 by Angel W.
 #
 # Updates:
 #                   - A possibility to uninstall/revert everything back.  (Angel W. , December 2016)
@@ -380,6 +380,7 @@ function _reinstall()
   # And then we re-make the LegacyEFINVRAM.kext
   #
   _check_data
+
   #
   # We should remove previous files before making injector.
   #
@@ -447,14 +448,14 @@ function main()
   #
   # We should check system version at a glance.
   #
-  gOSVersion=$(sw_vers -productVersion | awk -F '.' '{print $1 "." $2}')
+  gOSVersion="${gProductVersion:3:2}"
 
   case $gOSVersion in
-  10.10 | 10.11 | 10.12 ) #
+  10 | 11 | 12 ) #
                           # Supported OS detected. Then do nothing.
                           #
                           ;;
-  *                     ) printf "Your system major version ("$gOSVersion") is not supported!\n"
+*                     ) printf "Your system major version (10."${gOSVersion}") is not supported!\n"
                           exit 1
                           ;;
   esac
