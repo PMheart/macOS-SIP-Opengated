@@ -1,7 +1,7 @@
 openGate.sh
 ============
 
-###10.13 announcements
+### 10.13 announcements
 --------------------
 Now this serious bug has been fixed! Thanks Apple. So this script won't work under macOS `High Sierra`.
 
