@@ -1,6 +1,12 @@
 openGate.sh
 ============
 
+###10.13 announcements
+--------------------
+Now this serious bug has been fixed! Thanks Apple. So this script won't work under macOS `High Sierra`.
+
+Introduction
+-------------
 As we all know. Apple introduced SIP (System Integrity Protection) in OS X El Capitan. And it got enhanced in macOS Sierra. Pretty good. But in some cases we have to change the settings of SIP. And Apple set a restriction that we cannot configure SIP under normal OS. We cannot set SIP status via ```csrutil```.
 
 So that's why I wrote this script.
